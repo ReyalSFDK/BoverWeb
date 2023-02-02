@@ -1,15 +1,16 @@
 import * as React from "react";
 import { observer } from "mobx-react-lite";
-import { Image, Badge, Box, Flex } from "@chakra-ui/react";
+import { Image, Badge, Box, Flex, Text } from "@chakra-ui/react";
 import { youtubeCover } from "../../utils/youtubeCover";
 
 interface IProps {
+  id: string;
   title: string;
   videoURL: string;
 }
 
 export const RoomCard: React.FC<IProps> = observer((props) => {
-  const { videoURL } = props;
+  const { id, videoURL, title } = props;
 
   return (
       <Box
@@ -17,6 +18,7 @@ export const RoomCard: React.FC<IProps> = observer((props) => {
       >
         <Box
             position="relative"
+            height={200}
         >
           <Image
               w="full"
@@ -32,10 +34,18 @@ export const RoomCard: React.FC<IProps> = observer((props) => {
               AO VIVO
             </Badge>
             <Badge backgroundColor="blackAlpha.500" color="white" m={3}>
-              2 VISUALIZAÇÕES
+              ID: #{id}
             </Badge>
           </Flex>
         </Box>
+        <Text
+            backgroundColor="blackAlpha.500"
+            fontWeight="bold"
+            py={3}
+            textAlign="center"
+        >
+          {title}
+        </Text>
       </Box>
   );
 })

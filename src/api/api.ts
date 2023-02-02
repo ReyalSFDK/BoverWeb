@@ -165,7 +165,7 @@ export const RoomsApiFetchParamCreator = function (configuration?: Configuration
          * @throws {RequiredError}
          */
         roomsControllerFindAll(options: any = {}): FetchArgs {
-            const localVarPath = `/rooms`;
+            const localVarPath = `/rooms/lastTeen`;
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
             const localVarHeaderParameter = {} as any;
@@ -243,7 +243,7 @@ export const RoomsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        roomsControllerFindAll(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Room[]> {
+        roomsControllerFindAll(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<Room>> {
             const localVarFetchArgs = RoomsApiFetchParamCreator(configuration).roomsControllerFindAll(options);
             return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
@@ -261,12 +261,12 @@ export const RoomsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        roomsControllerFindOne(id: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        roomsControllerFindOne(id: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Room> {
             const localVarFetchArgs = RoomsApiFetchParamCreator(configuration).roomsControllerFindOne(id, options);
             return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
-                        return response;
+                        return response.json();
                     } else {
                         throw response;
                     }
