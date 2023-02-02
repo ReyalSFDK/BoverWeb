@@ -2,15 +2,12 @@ import * as React from "react";
 import { observer, useLocalObservable } from "mobx-react-lite";
 import {
   Box,
-  Button,
   Container, Flex,
   Heading,
-  Input,
   Spinner,
   Stack,
-  Text
 } from "@chakra-ui/react";
-import { Navbar, RoomCard, FindRoomSection } from "../../components";
+import { Navbar, RoomCard, FindRoomSection, CreateRoomSection } from "../../components";
 import { Store } from "./store";
 
 export const Home: React.FC = observer(() => {
@@ -26,35 +23,69 @@ export const Home: React.FC = observer(() => {
 	return (
       <Box>
         <Navbar />
-        <Flex px={50} pt={70} pb={70} alignItems="flex-end">
-          <Container w={["50%", "full"]}>
+        <Flex
+            position="relative"
+            px={50}
+            pt={70}
+            pb={70}
+            alignItems="flex-end"
+            bgImage="url(https://cdn.shopify.com/s/files/1/2347/1863/articles/Banner_1d346cfa874e5343dfa5664dec26ca43_2000_1770x.png)"
+            bgRepeat="no-repeat"
+            bgSize="cover"
+            wrap="wrap"
+        >
+          <Container
+              w={{
+                base: "50%",
+                sm: "100%"
+              }}
+              zIndex={1}
+          >
             <FindRoomSection
-                loading={false}
+                isLoading={false}
                 onFindRoomClick={(roomId) => {
                   store.preFetchFindRoomShelf.fetch(roomId, () => {});
                 }}
-                onCleanFetchFindRoomError={() => store.preFetchFindRoomShelf.setHasError(false)}
-                preFetchFindRoomError={store.preFetchFindRoomShelf.hasError}
+                onCleanError={() => store.preFetchFindRoomShelf.setHasError(false)}
+                hasError={store.preFetchFindRoomShelf.hasError}
             />
           </Container>
-          <Container w={["50%", "full"]}>
-            <Stack>
-              <Text>Achou aquele video bacana e quer mostrar pra rapaize?</Text>
-              <Input type="text"  variant="filled" placeholder="Titulo da Sala" />
-              <Input type="url" variant="filled" placeholder="Link para o video (youtube apenas)" />
-              <Button colorScheme="purple" variant="outline">
-                Criar sala
-              </Button>
-            </Stack>
+          <Container
+              w={{
+                base: "50%",
+                sm: "100%"
+              }}
+              zIndex={1}
+          >
+            <CreateRoomSection
+                onCreateRoomCliclk={(title, videoURL) => {
+                  store.createRoomShelf.fetch(title, videoURL, () => {});
+                }}
+                isLoading={store.createRoomShelf.isLoading}
+                hasError={store.createRoomShelf.hasError}
+                onCleanError={() => store.createRoomShelf.setHasError(false)}
+              />
           </Container>
+
+          <Box
+              zIndex={0}
+              pos="absolute"
+              width="100%"
+              height="100%"
+              top={0}
+              right={0}
+              left={0}
+              bottom={0}
+              bgColor="rgba(0, 0, 0, 0.6)"
+          />
         </Flex>
         <Box p={10}>
           <Heading as="h3" size="lg" py={5}>
-            Ultimas 10 Salas {store.getLastedRoomsShelf.isLoading && <Spinner color="#F600FF" />}
+            Bover as últimas 10 Salas {store.getLastedRoomsShelf.isLoading && <Spinner color="#F600FF" />}
           </Heading>
-          <Stack spacing={2} direction={["column", "row"]}>
+          <Stack spacing={2} direction={["column", "row"]} wrap="wrap">
             {store.getLastedRoomsShelf.rooms.map((room) => (
-                <RoomCard title={room.title} videoURL={room.videoURL} id={room.id} />
+                <RoomCard title={room.title} videoURL={room.videoURL} id={room.id} key={room.videoURL}/>
             ))}
           </Stack>
         </Box>

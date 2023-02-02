@@ -43,6 +43,7 @@ export const RoomCard: React.FC<IProps> = observer((props) => {
             fontWeight="bold"
             py={3}
             textAlign="center"
+            textColor="white"
         >
           {title}
         </Text>

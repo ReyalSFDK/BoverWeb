@@ -12,39 +12,51 @@ import {
 
 interface IProps {
   onFindRoomClick: (roomId: string) => void;
-  loading: boolean;
-  preFetchFindRoomError: boolean;
-  onCleanFetchFindRoomError: VoidFunction;
+  isLoading: boolean;
+  hasError: boolean;
+  onCleanError: VoidFunction;
 }
 
 export const FindRoomSection: React.FC<IProps> = observer((props) => {
   const [roomIdText, onSetRoomIdText] = React.useState("");
-  const { onFindRoomClick, onCleanFetchFindRoomError, loading, preFetchFindRoomError } = props;
+  const { onFindRoomClick, onCleanError, hasError, isLoading } = props;
 
   return (
       <Stack spacing={5}>
-        <Text fontSize="2xl" textAlign="center">
-          Deseja se juntar com a galerinha para ver aquele video legalzim?
+        <Text
+            fontSize="3xl"
+            textAlign="center"
+            textShadow="1px 1px #5F1BE6"
+            color="white"
+        >
+          Quer se juntar com aquela galerinha do mal pra ver aquele video maroto ou aquele meme muito bom pra rezenhar?
         </Text>
-        <FormControl isInvalid={preFetchFindRoomError}>
+        <FormControl isInvalid={hasError}>
           <InputGroup>
-            <InputLeftAddon children="#" />
+            <InputLeftAddon
+                borderColor="purple"
+                children="#"
+            />
             <Input
                 variant="filled"
                 type="tel"
+                borderColor="purple"
+                _placeholder={{
+                  color: "gray.500"
+                }}
                 placeholder="ID da sala"
-                disabled={loading}
+                disabled={isLoading}
                 value={roomIdText}
                 onChange={(e) => {
                   onSetRoomIdText(e.target.value);
-                  if (preFetchFindRoomError) {
-                    onCleanFetchFindRoomError();
+                  if (hasError) {
+                    onCleanError();
                   }
                 }}
             />
           </InputGroup>
           {
-            preFetchFindRoomError && (
+            hasError && (
                 <FormErrorMessage>Sala não encontrada</FormErrorMessage>
             )
           }
@@ -52,7 +64,8 @@ export const FindRoomSection: React.FC<IProps> = observer((props) => {
         <Button
             colorScheme="purple"
             variant="outline"
-            disabled={loading}
+            disabled={isLoading}
+            isLoading={isLoading}
             onClick={() => {
               onFindRoomClick(roomIdText);
             }}
