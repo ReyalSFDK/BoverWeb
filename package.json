@@ -25,7 +25,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "build-api": "java -jar swagger-cli/swagger-codegen-cli.jar generate -i https://p01--api--sjtljr7v9y52.code.run/docs-json  -l typescript-fetch -o src/API"
   },
   "eslintConfig": {
     "extends": "react-app"
