@@ -1,3 +1,3 @@
 export { CreateRoomShelf } from "./CreateRoomShelf";
-export { PreFetchFindRoomShelf } from "./PreFetchFindRoomShelf";
+export { FindRoomShelf } from "./FindRoomShelf";
 export { GetLastedRoomsShelf } from "./GetLastedRoomsShelf";

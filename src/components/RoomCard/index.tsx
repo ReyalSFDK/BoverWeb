@@ -7,14 +7,18 @@ interface IProps {
   id: string;
   title: string;
   videoURL: string;
+
+  onClick: VoidFunction;
 }
 
 export const RoomCard: React.FC<IProps> = observer((props) => {
-  const { id, videoURL, title } = props;
+  const { id, videoURL, title, onClick } = props;
 
   return (
       <Box
           w={300}
+          onClick={onClick}
+          cursor="pointer"
       >
         <Box
             position="relative"

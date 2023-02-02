@@ -9,9 +9,13 @@ import {
 } from "@chakra-ui/react";
 import { Navbar, RoomCard, FindRoomSection, CreateRoomSection } from "../../components";
 import { Store } from "./store";
+import { useNavigate } from "react-router-dom";
 
 export const Home: React.FC = observer(() => {
   const store = useLocalObservable(() => new Store());
+  const navigate = useNavigate();
+
+  const onGoToRoomPage = (roomId: string) => navigate(`/rooms/${roomId}`);
 
   React.useEffect(
       () => {
@@ -22,7 +26,7 @@ export const Home: React.FC = observer(() => {
 
 	return (
       <Box>
-        <Navbar />
+        <Navbar onLogoPress={() => navigate("/")} />
         <Flex
             position="relative"
             px={50}
@@ -44,7 +48,11 @@ export const Home: React.FC = observer(() => {
             <FindRoomSection
                 isLoading={false}
                 onFindRoomClick={(roomId) => {
-                  store.preFetchFindRoomShelf.fetch(roomId, () => {});
+                  store.preFetchFindRoomShelf.fetch(
+                      roomId,
+                      () => {
+                        onGoToRoomPage(roomId);
+                      });
                 }}
                 onCleanError={() => store.preFetchFindRoomShelf.setHasError(false)}
                 hasError={store.preFetchFindRoomShelf.hasError}
@@ -59,7 +67,13 @@ export const Home: React.FC = observer(() => {
           >
             <CreateRoomSection
                 onCreateRoomCliclk={(title, videoURL) => {
-                  store.createRoomShelf.fetch(title, videoURL, () => {});
+                  store.createRoomShelf.fetch(
+                      title,
+                      videoURL,
+                      (roomId) => {
+                        onGoToRoomPage(roomId);
+                      },
+                  );
                 }}
                 isLoading={store.createRoomShelf.isLoading}
                 hasError={store.createRoomShelf.hasError}
@@ -85,7 +99,13 @@ export const Home: React.FC = observer(() => {
           </Heading>
           <Stack spacing={2} direction={["column", "row"]} wrap="wrap">
             {store.getLastedRoomsShelf.rooms.map((room) => (
-                <RoomCard title={room.title} videoURL={room.videoURL} id={room.id} key={room.videoURL}/>
+                <RoomCard
+                    title={room.title}
+                    videoURL={room.videoURL}
+                    id={room.id}
+                    key={room.videoURL}
+                    onClick={() => onGoToRoomPage(room.id)}
+                />
             ))}
           </Stack>
         </Box>

@@ -1,10 +1,11 @@
 import { makeAutoObservable } from "mobx";
-import { RoomsApi } from "../api";
+import { RoomsApi, Room } from "../api";
 
-export class PreFetchFindRoomShelf {
+export class FindRoomShelf {
   private api: RoomsApi;
   public isLoading = false;
 
+  public room: Room | null = null;
   public hasError = false;
 
   constructor(api: RoomsApi) {
@@ -22,12 +23,19 @@ export class PreFetchFindRoomShelf {
     this.isLoading = isLoading;
   }
 
+  public setRoom = (room: Room) => {
+    this.room = room;
+  }
 
-  public fetch = async (roomId: string, onSucess: VoidFunction) => {
+
+  public fetch = async (roomId: string, onSucess?: VoidFunction) => {
     this.setIsLoading(true);
     try {
-      await this.api.roomsControllerFindOne(roomId);
-      onSucess();
+      const room = await this.api.roomsControllerFindOne(roomId);
+      this.setRoom(room);
+      if (onSucess) {
+        onSucess();
+      }
     } catch (error) {
       console.error(error);
       this.setHasError(true);

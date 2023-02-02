@@ -4,10 +4,21 @@ import { Flex, Image } from "@chakra-ui/react";
 
 import { ColorModeSwitcher } from "../ColorModeSwitcher";
 
-export const Navbar: React.FC = observer(() => {
+interface IProps {
+  onLogoPress: VoidFunction;
+}
+export const Navbar: React.FC<IProps> = observer((props) => {
+  const { onLogoPress } = props;
+
   return (
     <Flex justifyContent="center" alignItems="center">
-      <Image src="logo.png" alt="BoVer logo" w={20}/>
+      <Image
+          onClick={onLogoPress}
+          cursor="pointer"
+          src="/logo.png"
+          alt="BoVer logo"
+          w={20}
+      />
       <ColorModeSwitcher
           position="absolute"
           right={0}
