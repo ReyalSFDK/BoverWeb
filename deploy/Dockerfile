@@ -1,5 +1,5 @@
 # Use the full Node image to perform package install
-FROM node:12-alpine AS builder
+FROM node:14-alpine AS builder
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 ENV PATH /usr/src/app/node_modules/.bin:$PATH
