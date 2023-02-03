@@ -28,7 +28,7 @@ export const CreateRoomSection: React.FC<IProps> = observer((props) => {
             textShadow="1px 1px #F600FF"
             color="white"
         >
-          Achou aquele video bacana e quer mostrar pra rapaize de forma fácim fácim?
+          Achou aquele video bacana e quer mostrar para os amigos de forma fácil e rápida?
         </Text>
         <FormControl isInvalid={hasError}>
           <Input

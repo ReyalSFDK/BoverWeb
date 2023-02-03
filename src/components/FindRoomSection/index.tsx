@@ -29,7 +29,7 @@ export const FindRoomSection: React.FC<IProps> = observer((props) => {
             textShadow="1px 1px #5F1BE6"
             color="white"
         >
-          Quer se juntar com aquela galerinha do mal pra ver aquele video maroto ou aquele meme muito bom pra rezenhar?
+          Quer se juntar com aquela galerinha do mal pra ver aquele video maroto ou aquele meme muito bom pra resenhar?
         </Text>
         <FormControl isInvalid={hasError}>
           <InputGroup>
