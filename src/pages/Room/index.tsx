@@ -24,6 +24,8 @@ export const Room: React.FC = observer(() => {
       [store, roomId],
   );
 
+  const youtubeVideoWidth = 640 * (window.innerWidth / 1000);
+  const youtubeVideoHeight = (360 / 640) * youtubeVideoWidth;
 	return (
       <Box>
         <Navbar onLogoPress={() => navigate("/")} />
@@ -47,6 +49,10 @@ export const Room: React.FC = observer(() => {
               </Text>
               <YouTube
                   videoId={youtubeVideoId(store.findRoomShelf.room.videoURL)}
+                  opts={{
+                    width: youtubeVideoWidth,
+                    height: youtubeVideoHeight,
+                  }}
               />
               <ShareRoomSection />
             </Flex>
